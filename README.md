@@ -13,7 +13,7 @@ The project is structured as follows.
 	|—— wwwroot							Includes the site js and css files
 	|—— Models							Includes the model classes
 	|—— Pages							Includes the Razor Pages
-    	|—— SalesOrders					Include  the Razor Page for the SalesOrder model
+    	|-- SalesOrders					Include  the Razor Page for the SalesOrder model
     		
 ```
 ##### Setting Up the Project
