@@ -23,11 +23,11 @@ namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
 
         [BindProperty(SupportsGet = true)]
         [DataType(DataType.Date)]
-        public DateTime? StartOrderDate { get; set; } = new DateTime(2018, 1, 1).Date;
+        public DateTime? StartOrderDate { get; set; } = new DateTime(2011, 1, 1).Date;
 
         [BindProperty(SupportsGet = true)]
         [DataType(DataType.Date)]
-        public DateTime? EndOrderDate { get; set; } = new DateTime(2020, 1, 31).Date;
+        public DateTime? EndOrderDate { get; set; } = new DateTime(2012, 1, 31).Date;
 
         [BindProperty(SupportsGet = true)]
         public int? CustomerID { get; set; }
