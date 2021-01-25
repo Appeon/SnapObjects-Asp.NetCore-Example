@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Appeon.SnapObjectsDemo.Service.Models;
+﻿using Appeon.SnapObjectsDemo.Service.Models;
 using Appeon.SnapObjectsDemo.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Appeon.MvcModelMapperDemo.Pages
 {
@@ -33,42 +34,43 @@ namespace Appeon.MvcModelMapperDemo.Pages
 
         public string loginName { get; set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            queryPieReport();
-            queryTotalReport();
-            queryBarReportByYear();
+            await queryPieReport();
+            await queryTotalReport();
+            await queryBarReportByYear();
         }
 
-        private void queryTotalReport()
+        private async Task queryTotalReport()
         {
-            totalData = _reportService.RetrieveSalesOrderTotalReport();
+            totalData = await _reportService.RetrieveSalesOrderTotalReportAsync();
             //转换json
-            String Json_totalData = Newtonsoft.Json.JsonConvert.SerializeObject(totalData);
+            string Json_totalData = JsonConvert.SerializeObject(totalData);
             categoryReportByYear.Json_totalData = Json_totalData;
         }
 
-        private void queryPieReport()
+        private async Task queryPieReport()
         {
-            String curDate = "2013-01-01";
+            string curDate = "2013-01-01";
             var curYear = DateTime.Parse(curDate).Year.ToString();
             var lastYear = DateTime.Parse(curDate).AddYears(-1).Year.ToString();
             var master = new CategorySalesReportByYear();
-            categoryReportByYear = _reportService.RetrieveCategorySalesReportByYear(master, curYear, lastYear);
+            categoryReportByYear = await _reportService.RetrieveCategorySalesReportByYearAsync(master, curYear, lastYear);
             //转换json
-            String categorys = JsonConvert.SerializeObject(categoryReportByYear.SalesReportByCategory
+            string categorys = JsonConvert.SerializeObject(categoryReportByYear.SalesReportByCategory
                                                             .Select(x => x.ProductCategoryName));
 
-            String categorysData = JsonConvert.SerializeObject(categoryReportByYear.SalesReportByCategory
+            string categorysData = JsonConvert.SerializeObject(categoryReportByYear.SalesReportByCategory
                                                             .Select(x => new
                                                             {
-                                                                name = x.ProductCategoryName, value = x.TotalSalesqty
+                                                                name = x.ProductCategoryName,
+                                                                value = x.TotalSalesqty
                                                             }));
             categoryReportByYear.Json_Categorys = categorys;
             categoryReportByYear.Json_categorysData = categorysData;
         }
 
-        private void queryBarReportByYear()
+        private async Task queryBarReportByYear()
         {
             string salesYear = "2013";
             object[] yearMonth = new object[12];
@@ -82,7 +84,7 @@ namespace Appeon.MvcModelMapperDemo.Pages
             }
 
             var master = new ProductCategorySalesReport();
-            productCategorySalesReport = _reportService.RetrieveProductCategorySalesReport(master, yearMonth);
+            productCategorySalesReport = await _reportService.RetrieveProductCategorySalesReportAsync(master, yearMonth);
             ConvertDataForReport(productCategorySalesReport, resultMonth);
         }
 
@@ -116,15 +118,18 @@ namespace Appeon.MvcModelMapperDemo.Pages
                 result.Add(name, salesQtys);
             }
 
-            String proCat =JsonConvert.SerializeObject(ProCategoryName);
-            String proCatQty =JsonConvert.SerializeObject(result
+            string proCat = JsonConvert.SerializeObject(ProCategoryName);
+            string proCatQty = JsonConvert.SerializeObject(result
                                                             .Select(x => new
                                                             {
-                                                                name = x.Key, type = "bar", data = x.Value
+                                                                name = x.Key,
+                                                                type = "bar",
+                                                                data = x.Value
                                                             }));
             categoryReportByYear.Json_ProductSaleMonth = JsonConvert.SerializeObject(yearMonth);
             categoryReportByYear.Json_ProductCategory = proCat;
             categoryReportByYear.Json_ProductSaleSqty = proCatQty;
         }
+
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Appeon.MvcModelMapperDemo.Models
 {
-    public class BasePageModel: PageModel
+    public class BasePageModel : PageModel
     {
         /// <summary>
         /// Return to the unified json format
@@ -15,7 +15,7 @@ namespace Appeon.MvcModelMapperDemo.Models
         /// <param name="message"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        protected JsonResult GenJsonResult(int code,String message,int? id)
+        protected JsonResult GenJsonResult(int code, string message, int? id)
         {
             var result = new Dictionary<string, object>()
                 {
@@ -32,44 +32,63 @@ namespace Appeon.MvcModelMapperDemo.Models
         /// <param name="SalesOrder"></param>
         protected void ConvertData(SalesOrder SalesOrder)
         {
-            String orderDate = this.Request.Form["SalesOrder.OrderDate"];
-            String dueDate = this.Request.Form["SalesOrder.DueDate"];
-            String shipDate = this.Request.Form["SalesOrder.ShipDate"];
+            string orderDate = Request.Form["SalesOrder.OrderDate"];
+            string dueDate = Request.Form["SalesOrder.DueDate"];
+            string shipDate = Request.Form["SalesOrder.ShipDate"];
 
-            if (!String.IsNullOrEmpty(orderDate) && SalesOrder.OrderDate == null)
+            if (!string.IsNullOrEmpty(orderDate) && SalesOrder.OrderDate == null)
             {
-                try
+                if (!orderDate.ToString().Equals("0001/1/1 0:00:00"))
                 {
-                    DateTime dt;
-                    DateTime.TryParseExact(orderDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dt);
-                    SalesOrder.OrderDate = dt;
+                    try
+                    {
+                        DateTime dt;
+                        DateTime.TryParseExact(orderDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dt);
+                        SalesOrder.OrderDate = dt;
+                    }
+                    catch (Exception)
+                    { }
                 }
-                catch (Exception)
-                {
-                }
+                else
+                    SalesOrder.OrderDate = DateTime.Now;
             }
-            if (!String.IsNullOrEmpty(dueDate) && SalesOrder.DueDate == null)
+            if (!string.IsNullOrEmpty(dueDate) && SalesOrder.DueDate == null)
             {
-                try
+                if (!dueDate.ToString().Equals("0001/1/1 0:00:00"))
                 {
-                    SalesOrder.DueDate = DateTime.ParseExact(dueDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
+                    try
+                    {
+                        SalesOrder.DueDate = DateTime.ParseExact(dueDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
+                    }
+                    catch (Exception)
+                    { }
                 }
-                catch (Exception)
+                else
+                    SalesOrder.DueDate = DateTime.Now;
+            }
+            if (!string.IsNullOrEmpty(shipDate) && SalesOrder.ShipDate == null)
+            {
+                if (!shipDate.ToString().Equals("0001/1/1 0:00:00"))
                 {
+                    try
+                    {
+                        SalesOrder.ShipDate = (DateTime?)DateTime.ParseExact(shipDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None).AddDays(1);
+                    }
+                    catch (Exception)
+                    { }
+                }
+                else
+                    SalesOrder.ShipDate = DateTime.Now;
+            }
 
-                }
-            }
-            if (!String.IsNullOrEmpty(shipDate) && SalesOrder.ShipDate == null)
-            {
-                try
-                {
-                    SalesOrder.ShipDate = DateTime.ParseExact(shipDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
-                }
-                catch (Exception)
-                {
+            if (SalesOrder.OrderDate.ToString().IndexOf("0001") >= 0)
+                SalesOrder.OrderDate = DateTime.Now;
 
-                }
-            }
+            if (SalesOrder.DueDate.ToString().IndexOf("0001") >= 0)
+                SalesOrder.DueDate = DateTime.Now;
+
+            if (SalesOrder.ShipDate.ToString().IndexOf("0001") >= 0)
+                SalesOrder.ShipDate = DateTime.Now.AddDays(1);
         }
     }
 }

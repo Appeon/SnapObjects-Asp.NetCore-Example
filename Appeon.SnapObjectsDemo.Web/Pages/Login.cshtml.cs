@@ -1,9 +1,8 @@
-﻿using System;
-using Appeon.MvcModelMapperDemo.Models;
+﻿using Appeon.MvcModelMapperDemo.Models;
 using Appeon.SnapObjectsDemo.Service.Models;
 using Appeon.SnapObjectsDemo.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 
 namespace Appeon.MvcModelMapperDemo.Pages
 {
@@ -12,20 +11,20 @@ namespace Appeon.MvcModelMapperDemo.Pages
         private readonly ILoginService loginService;
         public LoginModel(ILoginService _loginService)
         {
-            this.loginService = _loginService;
+            loginService = _loginService;
         }
 
         [BindProperty]
         public Login Login { get; set; }
 
-        public void OnGet()
+        public void OnGetAsync()
         {
             Login = new Login();
             Login.Password = "K7dMpTY=";
             Login.Firstname = "Michael.Raheem";
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPostAsync()
         {
             try
             {
@@ -56,5 +55,6 @@ namespace Appeon.MvcModelMapperDemo.Pages
 
             return GenJsonResult(1, "", 0);
         }
+
     }
 }

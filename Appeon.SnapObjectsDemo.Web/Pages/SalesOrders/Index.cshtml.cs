@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Appeon.MvcModelMapperDemo.Models;
+﻿using Appeon.MvcModelMapperDemo.Models;
 using Appeon.SnapObjectsDemo.Service.Models;
 using Appeon.SnapObjectsDemo.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
 {
@@ -32,19 +33,19 @@ namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
         [BindProperty(SupportsGet = true)]
         public int? CustomerID { get; set; }
 
-        public void OnGet()
+        public void OnGetAsync()
         {
 
         }
 
-        public IActionResult OnGetDelete(String ids)
+        public async Task<IActionResult> OnGetDelete(string ids)
         {
             try
             {
-                String[] idArr = ids.Split(",");
+                string[] idArr = ids.Split(",");
                 foreach (var id in idArr)
                 {
-                    var result = _salesOrderService.DeleteByKey(id);
+                    var result = await _salesOrderService.DeleteByKeyAsync(new object[] { id });
                 }
             }
             catch (Exception e)
@@ -55,11 +56,11 @@ namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
             return GenJsonResult(1, "", null);
         }
 
-        public IActionResult OnGetDeleteById(String id)
+        public async Task<IActionResult> OnGetDeleteById(string id)
         {
             try
             {
-                var result = _salesOrderService.DeleteByKey(id);
+                var result = await _salesOrderService.DeleteByKeyAsync(new object[] { id });
             }
             catch (Exception e)
             {
@@ -69,7 +70,7 @@ namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
             return GenJsonResult(1, "", null);
         }
 
-        public ActionResult OnPostSearch(DataTable dt)
+        public async Task<ActionResult> OnPostSearch(DataTable dt)
         {
             try
             {
@@ -77,13 +78,13 @@ namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
                 int pageIndex = dt.pageIndex;
 
                 //query data by page
-                Page<SalesOrder> page = _salesOrderService
-                    .LoadByPage(pageIndex, pageSize, false, CustomerID ?? 0, StartOrderDate, EndOrderDate);
+                Page<SalesOrder> page = await _salesOrderService
+                    .LoadByPageAsync(pageIndex, pageSize, false, new object[] { CustomerID ?? 0, StartOrderDate, EndOrderDate });
 
-                this.SalesOrders = page.Items;
+                SalesOrders = page.Items;
                 dt.recordsTotal = page.TotalItems;
                 dt.recordsFiltered = page.TotalItems;
-                dt.data = this.SalesOrders.ToList();
+                dt.data = SalesOrders.ToList();
 
                 return new JsonResult(JsonConvert.SerializeObject(dt));
             }

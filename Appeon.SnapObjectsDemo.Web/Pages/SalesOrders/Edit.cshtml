@@ -22,7 +22,8 @@
     <!-- bootstrap-daterangepicker -->
     <link href="~/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- bootstrap-datetimepicker -->
-    <link href="~/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!--<link href="~/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">-->
+    <link href="~/vendors/bootstrap-datetimepicker/build/css/bootstrap-datepicker.css" rel="stylesheet" />
     <!-- Switchery -->
     <link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
     <!-- PNotify -->
@@ -38,7 +39,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title">
+                        <a href="../Index" class="site_title">
                             <img src="~/images/appeon.svg">
                             <i class="fa fa-paw"></i> <span>Appeon Demo!</span>
                         </a>
@@ -113,10 +114,12 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                                             Order Date <span class="required">*</span>
                                         </label>
+
                                         <div class="col-md-3 col-sm-6 col-xs-12">
-                                            <input type='text' class="form-control" required="required" readonly="readonly" asp-for="SalesOrder.OrderDate" />
+                                            <input type='text' class="form-control format1" required="required" readonly="readonly" asp-for="SalesOrder.OrderDate" />
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="OnlineOrderFlag">
                                             Online Order Flag <span class="required">*</span>
@@ -147,7 +150,7 @@
                                         <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class='input-group date' id='myDatepicker2'>
                                                 <div style="float:left;width:80%">
-                                                    <input type='text' class="form-control" id="DueDate" required="required" asp-for="SalesOrder.DueDate" />
+                                                    <input type='text' class="form-control format2" id="DueDate" readonly="readonly" required="required" asp-for="SalesOrder.DueDate" />
                                                 </div>
                                                 <span class="input-group-addon" style="float: left;width:38px;height: 34px;">
                                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -160,7 +163,7 @@
                                         <div class="col-md-3 col-sm-6 col-xs-12">
                                             <div class='input-group date' id='myDatepicker3'>
                                                 <div style="float:left;width:80%">
-                                                    <input type='text' class="form-control" id="ShipDate" required="required" asp-for="SalesOrder.ShipDate" />
+                                                    <input type='text' class="form-control format3" id="ShipDate" readonly="readonly" required="required" asp-for="SalesOrder.ShipDate" />
                                                 </div>
                                                 <span class="input-group-addon" style="float: left;width:38px;height: 34px;">
                                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -168,6 +171,23 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <script>
+                                        var dt1 = document.getElementsByClassName('format1')[0];
+                                        var dt2 = document.getElementsByClassName('format2')[0];
+                                        var dt3 = document.getElementsByClassName('format3')[0];
+
+                                        var dv1 = dt1.value;
+                                        var dv2 = dt2.value;
+                                        var dv3 = dt3.value;
+                                        
+                                        dv1 = dv1.split(' ')[0];
+                                        dv2 = dv2.split(' ')[0];
+                                        dv3 = dv3.split(' ')[0];
+                                        
+                                        dt1.value = dv1;
+                                        dt2.value = dv2;
+                                        dt3.value = dv3;
+                                    </script>
                                     <div class="form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                                             Customer <span class="required">*</span>
@@ -179,13 +199,13 @@
                                                 {
                                                     if (item.Value.Equals(Model.SalesOrder.CustomerID.ToString()))
                                                     {
-                                                        <option value="@item.Value" selected="selected">@item.Text</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Value">@item.Text</option>
-                                                    }
-                                                }
+                                    <option value="@item.Value" selected="selected">@item.Text</option>
+ }
+                                else
+                                {
+                <option value="@item.Value">@item.Text</option>
+}
+        }
                                             </select>
                                         </div>
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
@@ -198,13 +218,13 @@
                                                 {
                                                     if (item.Value.Equals(Model.SalesOrder.CreditCardID.ToString()))
                                                     {
-                                                        <option value="@item.Value" selected="selected">@item.Text</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Value">@item.Text</option>
-                                                    }
-                                                }
+                                    <option value="@item.Value" selected="selected">@item.Text</option>
+ }
+                                else
+                                {
+                <option value="@item.Value">@item.Text</option>
+}
+        }
                                             </select>
                                         </div>
                                     </div>
@@ -219,13 +239,13 @@
                                                 {
                                                     if (item.Value.Equals(Model.SalesOrder.BillToAddressID.ToString()))
                                                     {
-                                                        <option value="@item.Value" selected="selected">@item.Text</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Value">@item.Text</option>
-                                                    }
-                                                }
+                                    <option value="@item.Value" selected="selected">@item.Text</option>
+ }
+                                else
+                                {
+                <option value="@item.Value">@item.Text</option>
+}
+        }
                                             </select>
                                         </div>
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
@@ -238,13 +258,13 @@
                                                 {
                                                     if (item.Value.Equals(Model.SalesOrder.ShipToAddressID.ToString()))
                                                     {
-                                                        <option value="@item.Value" selected="selected">@item.Text</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@item.Value">@item.Text</option>
-                                                    }
-                                                }
+                                    <option value="@item.Value" selected="selected">@item.Text</option>
+ }
+                                else
+                                {
+                <option value="@item.Value">@item.Text</option>
+}
+        }
                                             </select>
                                         </div>
                                     </div>
@@ -455,46 +475,44 @@
                                     <tbody>
                                         @foreach (var item in Model.SalesOrder.OrderDetails)
                                         {
-                                            <tr>
-                                                <td class="detailId">
-                                                    <input class="salesOrderID" type="hidden" asp-for="@item.SalesOrderID">
-                                                    <input class="carrierTrackingNumber" type="hidden" asp-for="@item.CarrierTrackingNumber">
-                                                    <input class="specialOfferID" type="hidden" asp-for="@item.SpecialOfferID">
-                                                    <input class="salesOrderDetailID" type="hidden" asp-for="@item.SalesOrderDetailID">
-                                                    @item.SalesOrderDetailID
-                                                </td>
-                                                <td class="productID">
-                                                    <input type="hidden" asp-for="@item.ProductID">
-                                                    @if (Model.OrderProductMaps.TryGetValue(item.ProductID, out var productName))
-                                                    {
-                                                        @productName
-                                                    }
-                                                </td>
-                                                <td class="unitPrice">
-                                                    <input type="hidden" asp-for="@item.UnitPrice">
-                                                    @item.UnitPrice
-                                                </td>
-                                                <td class="orderQty">
-                                                    <input type="hidden" asp-for="@item.OrderQty">
-                                                    @item.OrderQty
-                                                </td>
-                                                <td class="unitPriceDiscount">
-                                                    <input type="hidden" asp-for="@item.UnitPriceDiscount">
-                                                    @item.UnitPriceDiscount
-                                                </td>
-                                                <td class="lineTotal">
-                                                    <input type="hidden" asp-for="@item.LineTotal">
-                                                    @item.LineTotal
-                                                </td>
-                                                <td class="modifieddate">
-                                                    @Html.DisplayFor(modelItem => item.ModifiedDate)
-                                                </td>
-                                                <td class="operate">
-                                                    <a href="javascript:void(0);" id="editDetail" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                                                    <a href="javascript:void(0);" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-                                                </td>
-                                            </tr>
-                                        }
+                            <tr>
+                                <td class="detailId">
+                                    <input class="salesOrderID" type="hidden" asp-for="@item.SalesOrderID">
+                                    <input class="carrierTrackingNumber" type="hidden" asp-for="@item.CarrierTrackingNumber">
+                                    <input class="specialOfferID" type="hidden" asp-for="@item.SpecialOfferID">
+                                    <input class="salesOrderDetailID" type="hidden" asp-for="@item.SalesOrderDetailID">
+                                    @item.SalesOrderDetailID
+                                </td>
+                                <td class="productID">
+                                    <input type="hidden" asp-for="@item.ProductID">
+                                    @if (Model.OrderProductMaps.TryGetValue(item.ProductID, out var productName))
+                                    {
+                    @productName}
+                                </td>
+                                <td class="unitPrice">
+                                    <input type="hidden" asp-for="@item.UnitPrice">
+                                    @item.UnitPrice
+                                </td>
+                                <td class="orderQty">
+                                    <input type="hidden" asp-for="@item.OrderQty">
+                                    @item.OrderQty
+                                </td>
+                                <td class="unitPriceDiscount">
+                                    <input type="hidden" asp-for="@item.UnitPriceDiscount">
+                                    @item.UnitPriceDiscount
+                                </td>
+                                <td class="lineTotal">
+                                    <input type="hidden" asp-for="@item.LineTotal">
+                                    @item.LineTotal
+                                </td>
+                                <td class="modifieddate">
+                                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                </td>
+                                <td class="operate">
+                                    <a href="javascript:void(0);" id="editDetail" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                    <a href="javascript:void(0);" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                </td>
+                            </tr>}
                                     </tbody>
                                 </table>
                             </div>
@@ -523,8 +541,8 @@
     <!-- bootstrap-daterangepicker -->
     <script src="~/vendors/moment/min/moment.min.js"></script>
     <script src="~/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!--<script src="~/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>-->
     <script src="~/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-
     <!-- jQuery Tags Input -->
     <script src="~/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
     <!-- Switchery -->
@@ -544,9 +562,13 @@
     <script type="text/javascript" src="~/js/orderEdit.js"></script>
     <script type="text/javascript" src="~/js/order.js"></script>
     <script>
+
+        
+        /*
         $('#myDatepicker1').datetimepicker({
             format: 'DD/MM/YYYY'
         });
+
         $('#myDatepicker2').datetimepicker({
             format: 'DD/MM/YYYY'
         });
@@ -554,11 +576,40 @@
         $('#myDatepicker3').datetimepicker({
             format: 'DD/MM/YYYY'
         });
+
         $('#myDatepicker4').datetimepicker({
             format: 'DD/MM/YYYY'
         });
+        *//*
+        var dt = document.getElementsByClassName("format");
 
+        console.log(dt);
 
+        AddEvent(dt, "input", FormatDate(dt));
+
+        function AddEvent(el, type, handle) {
+            try {
+                el.AddEventListener(type, handle, false);
+            } catch (e) {
+                try {
+                    el.attachEvent('on ' + type, handle);
+                } catch (e) {
+                    el['on ' + type] = handle;
+                }
+            }
+        }
+
+        function FormatDate(el) {
+
+            var old_orderDt = el[0].value;
+            var old_dueDt = el[1].value;
+            var old_shipDt = el[2].value;
+            $('#myDatepicker3').datepicker()
+            console.log(old_orderDt);
+            console.log(old_dueDt);
+            console.log(old_shipDt);
+        }
+        */
 
         function redirect(to) {
             if (to == 'add') {

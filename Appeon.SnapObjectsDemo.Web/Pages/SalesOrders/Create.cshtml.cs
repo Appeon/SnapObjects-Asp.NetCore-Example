@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Appeon.MvcModelMapperDemo.Models;
+﻿using Appeon.MvcModelMapperDemo.Models;
 using Appeon.SnapObjectsDemo.Service.Models;
 using Appeon.SnapObjectsDemo.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
 {
@@ -37,11 +38,11 @@ namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
 
         public SelectList OrderProducts { get; set; }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             try
             {
-                this.LoadData();
+                await LoadData();
             }
             catch (Exception e)
             {
@@ -51,17 +52,17 @@ namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
             return Page();
         }
 
-        private void LoadData()
+        private async Task LoadData()
         {
             try
             {
-                this.QueryCustomers();
+                await QueryCustomers();
 
-                this.QuerySalesPersons();
+                await QuerySalesPersons();
 
-                this.QueryShipMethods();
+                await QueryShipMethods();
 
-                this.QueryOrderProducts();
+                await QueryOrderProducts();
             }
             catch (Exception e)
             {
@@ -69,59 +70,58 @@ namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
             }
         }
 
-        public JsonResult OnGetRetrieveDddw(int customerId)
+        public async Task<JsonResult> OnGetRetrieveDddw(int customerId)
         {
             var result = new Dictionary<string, object>()
             {
                 { "code", 1},
 
-                { "creditcards", _genericServices.Get<DdCreditcard>()
-                    .Retrieve(false, customerId)},
+                { "creditcards", await _genericServices.Get<DdCreditcard>()
+                    .RetrieveAsync(false, new object[] { customerId })},
 
-                { "customerAddresses", _genericServices.Get<DdCustomerAddress>()
-                    .Retrieve(false, customerId) }
+                { "customerAddresses", await _genericServices.Get<DdCustomerAddress>()
+                    .RetrieveAsync(false, new object[] { customerId }) }
             };
             return new JsonResult(result);
         }
 
-
-        private void QueryOrderProducts()
+        private async Task QueryOrderProducts()
         {
             // 0: retrieve all products
-            var ddOrderProducts = _genericServices.Get<DdOrderProduct>().Retrieve(false, 0);
+            var ddOrderProducts = await _genericServices.Get<DdOrderProduct>().RetrieveAsync(false, new object[] { 0 });
             //  query products
-            this.OrderProducts = new SelectList(ddOrderProducts, "Product_Productid", "Product_Name");
+            OrderProducts = new SelectList(ddOrderProducts, "Product_Productid", "Product_Name");
             //  convert to Dictionary
-            this.OrderProductMaps = ddOrderProducts.ToDictionary(x => x.Product_Productid, x => x.Product_Name);
+            OrderProductMaps = ddOrderProducts.ToDictionary(x => x.Product_Productid, x => x.Product_Name);
         }
 
-        private void QueryCustomers()
+        private async Task QueryCustomers()
         {
-            var ddCustomers = _genericServices.Get<DdCustomer>().Retrieve(false);
+            var ddCustomers = await _genericServices.Get<DdCustomer>().RetrieveAsync(false, default);
 
-            this.Customers = new SelectList(ddCustomers, "Customer_Customerid", "Fullname");
+            Customers = new SelectList(ddCustomers, "Customer_Customerid", "Fullname");
         }
 
-        private void QuerySalesPersons()
+        private async Task QuerySalesPersons()
         {
-            var ddSalesPersons = _genericServices.Get<DdSalesPerson>().Retrieve(false);
+            var ddSalesPersons = await _genericServices.Get<DdSalesPerson>().RetrieveAsync(false, default);
 
-            this.SalesPersons = new SelectList(ddSalesPersons, "Salesperson_Businessentityid", "Fullname");
+            SalesPersons = new SelectList(ddSalesPersons, "Salesperson_Businessentityid", "Fullname");
         }
 
-        private void QueryShipMethods()
+        private async Task QueryShipMethods()
         {
-            var ddShipMethods = _genericServices.Get<DdShipMethod>().Retrieve(false);
+            var ddShipMethods = await _genericServices.Get<DdShipMethod>().RetrieveAsync(false, default);
 
-            this.ShipMethods = new SelectList(ddShipMethods, "Shipmethodid", "Name");
+            ShipMethods = new SelectList(ddShipMethods, "Shipmethodid", "Name");
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             try
             {
                 ConvertData(SalesOrder);
-                var insertedCount = _salesOrderService.Create(SalesOrder);
+                var insertedCount = await _salesOrderService.CreateAsync(SalesOrder);
             }
             catch (Exception e)
             {
@@ -130,5 +130,6 @@ namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
 
             return GenJsonResult(1, "", SalesOrder.SalesOrderID);
         }
+
     }
 }

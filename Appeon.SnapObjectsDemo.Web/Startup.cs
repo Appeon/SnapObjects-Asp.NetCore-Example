@@ -1,16 +1,16 @@
-﻿using System.IO.Compression;
-using Appeon.SnapObjectsDemo.Service.Datacontext;
+﻿using Appeon.SnapObjectsDemo.Service.Datacontext;
 using Appeon.SnapObjectsDemo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using SnapObjects.Data;
 using SnapObjects.Data.AspNetCore;
 using SnapObjects.Data.SqlServer;
+using System.IO.Compression;
 
 namespace Appeon.MvcModelMapperDemo
 {
@@ -26,7 +26,7 @@ namespace Appeon.MvcModelMapperDemo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDataContext<OrderContext>(m => m.UseSqlServer(Configuration["ConnectionStrings:AdventureWorks2012"]));
+            services.AddDataContext<OrderContext>(m => m.UseSqlServer(Configuration, "AdventureWorks"));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -34,17 +34,17 @@ namespace Appeon.MvcModelMapperDemo
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
             services.AddScoped<ISalesOrderService, SalesOrderService>();
             services.AddScoped<IOrderReportService, OrderReportService>();
             services.AddScoped<IGenericServiceFactory, GenericServiceFactory>();
-
             services.AddScoped<ISalesOrderDetailService, SalesOrderDetailService>();
             services.AddScoped<ILoginService, LoginService>();
 
-
             services.AddGzipCompression(CompressionLevel.Fastest);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddRazorPagesOptions(option=> {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddRazorPagesOptions(option =>
+            {
                 //option.RootDirectory = "/Pages";
                 //option.Conventions.AddPageRoute("/Pages", "/Login");
             });
@@ -53,7 +53,7 @@ namespace Appeon.MvcModelMapperDemo
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSession();
             if (env.IsDevelopment())
@@ -69,9 +69,14 @@ namespace Appeon.MvcModelMapperDemo
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseRouting();
+            app.UseAuthorization();
             app.UseCookiePolicy();
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+            });
         }
     }
 }

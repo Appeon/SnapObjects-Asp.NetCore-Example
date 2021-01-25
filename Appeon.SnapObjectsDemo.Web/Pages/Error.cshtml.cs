@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics;
 
 namespace Appeon.MvcModelMapperDemo.Pages
 {
@@ -15,9 +11,10 @@ namespace Appeon.MvcModelMapperDemo.Pages
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
-        public void OnGet()
+        public void OnGetAsync()
         {
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
         }
+
     }
 }

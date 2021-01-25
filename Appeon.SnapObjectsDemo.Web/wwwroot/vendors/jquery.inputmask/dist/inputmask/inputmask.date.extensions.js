@@ -56,9 +56,9 @@
             } ]
         }
     }), Inputmask.extendAliases({
-        "dd/mm/yyyy": {
+        "yyyy/MM/dd": {
             mask: "1/2/y",
-            placeholder: "dd/mm/yyyy",
+            placeholder: "yyyy/MM/dd",
             regex: {
                 val1pre: new RegExp("[0-3]"),
                 val1: new RegExp("0[1-9]|[12][0-9]|3[01]"),
@@ -256,7 +256,7 @@
         },
         "mm/dd/yyyy": {
             placeholder: "mm/dd/yyyy",
-            alias: "dd/mm/yyyy",
+            alias: "yyyy/MM/dd",
             regex: {
                 val2pre: function(separator) {
                     var escapedSeparator = Inputmask.escapeRegex.call(this, separator);
@@ -298,14 +298,14 @@
             placeholder: "dd.mm.yyyy",
             leapday: "29.02.",
             separator: ".",
-            alias: "dd/mm/yyyy"
+            alias: "yyyy/MM/dd"
         },
         "dd-mm-yyyy": {
             mask: "1-2-y",
             placeholder: "dd-mm-yyyy",
             leapday: "29-02-",
             separator: "-",
-            alias: "dd/mm/yyyy"
+            alias: "yyyy/MM/dd"
         },
         "mm.dd.yyyy": {
             mask: "1.2.y",
@@ -337,8 +337,8 @@
         },
         datetime: {
             mask: "1/2/y h:s",
-            placeholder: "dd/mm/yyyy hh:mm",
-            alias: "dd/mm/yyyy",
+            placeholder: "yyyy/MM/dd hh:mm",
+            alias: "yyyy/MM/dd",
             regex: {
                 hrspre: new RegExp("[012]"),
                 hrs24: new RegExp("2[0-4]|1[3-9]"),
@@ -424,7 +424,7 @@
         },
         datetime12: {
             mask: "1/2/y h:s t\\m",
-            placeholder: "dd/mm/yyyy hh:mm xm",
+            placeholder: "yyyy/MM/dd hh:mm xm",
             alias: "datetime",
             hourFormat: "12"
         },
@@ -479,7 +479,7 @@
             autoUnmask: !1
         },
         date: {
-            alias: "dd/mm/yyyy"
+            alias: "yyyy/MM/dd"
         },
         "mm/yyyy": {
             mask: "1/y",
