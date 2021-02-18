@@ -1,6 +1,6 @@
 ﻿# SnapObjects-ASP.NET Core Example
 
-This ASP.NET Core project makes use of the Razor page, and references to a Class Library project, [SnapObjects-Example](https://github.com/Appeon/SnapObjects-Example), to perform CRUD operations and transaction management with SqlModelMapper from [SnapObjects.Data](https://www.nuget.org/packages/SnapObjects.Data/).
+This ASP.NET Core project makes use of the Razor Pages, and references to a Class Library project, [SnapObjects-Example](https://github.com/Appeon/SnapObjects-Example), to perform CRUD operations and transaction management with SqlModelMapper from [SnapObjects.Data](https://www.nuget.org/packages/SnapObjects.Data/).
 
 ##### Project Structure
 
