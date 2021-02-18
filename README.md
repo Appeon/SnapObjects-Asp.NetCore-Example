@@ -4,7 +4,7 @@ This ASP.NET Core project makes use of the Razor Pages, and references to a Clas
 
 ##### Project Structure
 
-The project contains an ASP.NET Core Web Application project. it is implemented using [Razor Pages](https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.2&tabs=visual-studio). 
+The project contains an ASP.NET Core Web Application project. It is implemented using [Razor Pages](https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-2.2&tabs=visual-studio). 
 
 The project is structured as follows.
 
