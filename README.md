@@ -9,10 +9,10 @@ The project contains an ASP.NET Core Web Application project. It is implemented 
 The project is structured as follows.
 
 ```
-|—— Appeon.SnapObjectsDemo.Web			Project implemented with Razor Pages
-	|—— wwwroot							Includes the site js and css files
-	|—— Models							Includes the model classes
-	|—— Pages							Includes the Razor Pages
+|—— Appeon.SnapObjectsDemo.Web				Project implemented with Razor Pages
+	|—— wwwroot					Includes the site js and css files
+	|—— Models					Includes the model classes
+	|—— Pages					Includes the Razor Pages
     	|-- SalesOrders					Include  the Razor Page for the SalesOrder model
 ```
 ##### Setting Up the Project
