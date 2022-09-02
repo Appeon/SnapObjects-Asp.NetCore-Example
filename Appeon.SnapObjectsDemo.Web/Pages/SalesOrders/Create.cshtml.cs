@@ -64,9 +64,9 @@ namespace Appeon.MvcModelMapperDemo.Pages.SalesOrders
 
                 await QueryOrderProducts();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
 

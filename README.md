@@ -21,7 +21,7 @@ The project is structured as follows.
 
 2. Download the Class Library (.NET Core) project [SnapObjects-Example](https://github.com/Appeon/SnapObjects-Example), and save it to the same folder as this project. 
 
-3. Open the *SnapObjects-ASP.NET Core-Example.sln* solution in Visual Studio 2019 or another C# development IDE.
+3. Open the *SnapObjects-ASP.NET Core-Example.sln* solution in Visual Studio 2022 or another C# development IDE.
 
 4. Add the *Appeon.SnapObjectsDemo.Service.SqlServer* project from the Class Library (.NET Core) project to *SnapObjects-ASP.NET Core-Example.sln*.
 
@@ -35,7 +35,7 @@ The project is structured as follows.
 
    ```json
    //Keep the database connection name as the default “AdventureWorks” or change it to a name you prefer to use, and change the Data Source, User ID, Password and Initial Catalog according to the actual settings
-   "ConnectionStrings": { "AdventureWorks": "Data Source=127.0.0.1; Initial Catalog=AdventureWorks; Integrated Security=False; User ID=sa; Password=123456; Pooling=True; Min Pool Size=0; Max Pool Size=100; ApplicationIntent=ReadWrite" }
+   "ConnectionStrings": { "AdventureWorks": "Data Source=127.0.0.1; Initial Catalog=AdventureWorks; Integrated Security=False; User ID=sa; Password=123456; Pooling=True; Min Pool Size=0; Max Pool Size=100; ApplicationIntent=ReadWrite;Trust Server Certificate=True" }
    ```
 
 8. In the ConfigureServices method of *Startup.cs*, go to the following line, and make sure the ConnectionString name is the same as the database connection name specified in step #7.

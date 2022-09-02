@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appeon.SnapObjectsDemo.Web", "Appeon.SnapObjectsDemo.Web\Appeon.SnapObjectsDemo.Web.csproj", "{2E7B7E2E-736D-4616-B1E6-7EF30B93270F}"
 EndProject

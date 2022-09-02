@@ -43,7 +43,7 @@ namespace Appeon.MvcModelMapperDemo
 
             services.AddGzipCompression(CompressionLevel.Fastest);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddRazorPagesOptions(option =>
+            services.AddMvc().AddRazorPagesOptions(option =>
             {
                 //option.RootDirectory = "/Pages";
                 //option.Conventions.AddPageRoute("/Pages", "/Login");
